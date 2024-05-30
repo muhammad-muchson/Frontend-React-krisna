@@ -43,7 +43,6 @@ export default function Login() {
           <h1 className="text-normal font-lighter mb-6 text-dark-1 text-center">Dukungan Profesional untuk Kesehatan Mental Anda</h1>
 
           {/* form login */}
-          {error && <p>{error}</p>}
           <form action="#" method="POST" className="space-y-4" onSubmit={handleLogin}>
 
             {/* username */}
@@ -89,10 +88,13 @@ export default function Login() {
               </div>
             </div>
             
+            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+            
             <div>
-              <button type="submit" className="w-full bg-primary text-white p-2 rounded-md hover:bg-primary-darker focus:outline-none focus:bg-black focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Login</button>
+              <button type="submit" className="w-full bg-primary text-white p-2 rounded-md hover:bg-primary-darker focus:outline-none focus:bg-primary-darker focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-300">Login</button>
             </div>
           </form>
+
 
           {/* form login dengan google atau fb */}
           <div className="mt-4 text-sm text-gray-600 text-center">
