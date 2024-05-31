@@ -1,10 +1,13 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { login } from '../../utils/auth';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -14,24 +17,16 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/v1/users/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      });
+      const { success, token, message } = await login(username, password);
 
-      if (!response.ok) {
-        throw new Error('Login failed');
+      if (success) {
+        setIsLoggedIn(true); // Update login status
+        return <Navigate to="/" />;
+      } else {
+        setError(message || 'Login failed');
       }
-
-      const data = await response.json();
-      console.log('Login successful:', data);
-
-      // Handle successful login, e.g., save token, redirect, etc.
     } catch (error) {
-      setError(error.message);
+      setError(error.message || 'Login failed');
     }
   };
 
@@ -91,7 +86,7 @@ export default function Login() {
             {error && <p className="text-red-500 text-center mt-4">{error}</p>}
             
             <div>
-              <button type="submit" className="w-full bg-primary text-white p-2 rounded-md hover:bg-primary-darker focus:outline-none focus:bg-primary-darker focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-300">Login</button>
+              <button type="submit" className="btn btn-outline w-full bg-white text-primary p-2 rounded-md hover:bg-primary hover:text-white focus:outline-none focus:bg-primary-darker focus:text-white focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-300">Login</button>
             </div>
           </form>
 
