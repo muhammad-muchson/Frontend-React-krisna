@@ -21,7 +21,7 @@ export default function Login() {
 
       if (success) {
         setIsLoggedIn(true); // Update login status
-        return <Navigate to="/" />;
+        window.location.reload();
       } else {
         setError(message || 'Login failed');
       }
@@ -29,6 +29,10 @@ export default function Login() {
       setError(error.message || 'Login failed');
     }
   };
+
+  if (isLoggedIn) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="flex h-screen">

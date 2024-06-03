@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { isAuthenticated } from './utils/auth';
 import Login from './pages/Login/Login';
 import Homepage from './pages/Home/Homepage';
@@ -16,15 +16,13 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={isLoggedIn ? <Navigate to="/homepage" /> : <Login />} />
-        <Route path="/homepage" element={<Homepage />} />
-        <Route path="/managecontent" element={<ManageContent />} />
-        <Route path="/managepatient" element={<ManagePatient />} />
-        <Route path="/transaction" element={<Transaction />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={isLoggedIn ? <Navigate to="/homepage" /> : <Login />} />
+      <Route path="/homepage" element={<Homepage />} />
+      <Route path="/managecontent" element={<ManageContent />} />
+      <Route path="/managepatient" element={<ManagePatient />} />
+      <Route path="/transaction" element={<Transaction />} />
+    </Routes>
   );
 }
 
